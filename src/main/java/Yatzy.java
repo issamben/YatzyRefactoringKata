@@ -7,10 +7,7 @@ public class Yatzy {
     }
 
     public static int yatzy(DiceRoll diceRoll) {
-        if (diceRoll.isYatzy()) {
-            return 50;
-        }
-        return 0;
+        return diceRoll.isYatzy() ? 50 : 0;
     }
 
     public static Long ones(DiceRoll diceRoll) {
@@ -22,38 +19,32 @@ public class Yatzy {
     }
 
     public static Long threes(DiceRoll diceRoll) {
-        return  diceRoll.countDice(3) * 3;
+        return diceRoll.countDice(3) * 3;
     }
 
     public static Long fours(DiceRoll diceRoll) {
-        return  diceRoll.countDice(4) * 4;
+        return diceRoll.countDice(4) * 4;
     }
 
     public static Long fives(DiceRoll diceRoll) {
-        return  diceRoll.countDice(5) * 5;
+        return diceRoll.countDice(5) * 5;
     }
 
     public static Long sixes(DiceRoll diceRoll) {
-        return  diceRoll.countDice(6) * 6;
+        return diceRoll.countDice(6) * 6;
     }
 
     public static int onePair(DiceRoll diceRoll) {
         List<Integer> pairs = diceRoll.findPairs();
-        if (pairs.isEmpty()) {
-            return 0;
-        }  else {
-            return pairs.get(0) * 2;
-        }
+        return pairs.isEmpty() ? 0 : pairs.get(0) * 2;
     }
 
     public static int twoPair(DiceRoll diceRoll) {
         List<Integer> pairs = diceRoll.findPairs();
-        if (pairs.size() >= 2) {
-            return pairs.stream()
-                .mapToInt(pair -> pair * 2)
-                .sum();
-        }
-        return 0;
+        return pairs.size() >= 2 ? pairs
+            .stream()
+            .mapToInt(pair -> pair * 2)
+            .sum() : 0;
     }
 
     public static int threeOfAKind(DiceRoll diceRoll) {
@@ -65,25 +56,14 @@ public class Yatzy {
     }
 
     public static int smallStraight(DiceRoll diceRoll) {
-        if (diceRoll.isSmallStraight()) {
-            return 15;
-        }
-        return 0;
+        return diceRoll.isSmallStraight() ? 15 : 0;
     }
 
     public static int largeStraight(DiceRoll diceRoll) {
-        if (diceRoll.isLargeStraight()) {
-            return 20;
-        }
-        return 0;
+        return diceRoll.isLargeStraight() ? 20 : 0;
     }
 
     public static int fullHouse(DiceRoll diceRoll) {
-        if (diceRoll.isFullHouse()) {
-            return diceRoll.sum();
-        }
-        return 0;
+        return diceRoll.isFullHouse() ? diceRoll.sum() : 0;
     }
-
-
 }

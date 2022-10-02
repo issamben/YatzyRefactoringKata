@@ -2,6 +2,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static java.util.Arrays.asList;
 import static java.util.Collections.reverseOrder;
 import static java.util.function.Function.identity;
@@ -33,27 +35,27 @@ public class DiceRoll {
     }
 
     public List<Integer> findPairs() {
-        return dices
-            .stream()
-            .collect(groupingBy(identity(), Collectors.counting()))
-            .entrySet()
-            .stream()
-            .filter(e -> e.getValue() >= 2)
-            .map(Map.Entry::getKey)
+        return findNumberOfDiceEqualOrGreaterThan(2)
             .sorted(reverseOrder())
             .collect(toList());
     }
 
     public int getDiceWithCountGreaterThan(int n) {
-        return dices
-            .stream()
-            .collect(groupingBy(identity(), Collectors.counting()))
+        return findNumberOfDiceEqualOrGreaterThan(n)
+            .findFirst()
+            .orElse(0);
+    }
+
+    private Stream<Integer> findNumberOfDiceEqualOrGreaterThan(int n) {
+        return counts()
             .entrySet()
             .stream()
             .filter(e -> e.getValue() >= n)
-            .map(Map.Entry::getKey)
-            .findFirst()
-            .orElse(0);
+            .map(Map.Entry::getKey);
+    }
+
+    private Map<Integer, Long> counts() {
+        return dices.stream().collect(groupingBy(identity(), Collectors.counting()));
     }
 
     public boolean isSmallStraight() {
